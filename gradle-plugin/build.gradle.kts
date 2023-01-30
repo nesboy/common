@@ -3,7 +3,7 @@ import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 
 group = "dev.tcheng.common"
-version = "1.0.0"
+version = "0.0.1"
 
 plugins {
     kotlin("jvm")
