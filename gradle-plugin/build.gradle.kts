@@ -6,8 +6,8 @@ group = "dev.tcheng.common"
 version = "1.0.0"
 
 plugins {
-    kotlin("jvm") version "1.8.0"
-    id("io.gitlab.arturbosch.detekt").version("1.22.0")
+    kotlin("jvm")
+    id("io.gitlab.arturbosch.detekt")
     `java-gradle-plugin`
 }
 
@@ -16,32 +16,39 @@ repositories {
 }
 
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${project.findProperty("detekt.formatting.version")}")
+    val detektVersion: String by project
+    val junitVersion: String by project
+
+    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detektVersion")
     testImplementation(kotlin("test"))
-    testImplementation("org.junit.jupiter:junit-jupiter:${project.findProperty("junit.version")}")
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
 }
 
 gradlePlugin {
+    val classpathPrefix = "dev.tcheng.common.gradle.plugin"
+
     plugins {
+        create("detektStandardsPlugin") {
+            id = "$classpathPrefix.detekt-standards"
+            implementationClass = "$classpathPrefix.DetektStandardsPlugin"
+        }
         create("echoPlugin") {
-            id = "dev.tcheng.common.gradle.plugin.echo"
-            implementationClass = "dev.tcheng.common.gradle.plugin.EchoPlugin"
+            id = "$classpathPrefix.echo"
+            implementationClass = "$classpathPrefix.EchoPlugin"
         }
     }
 }
 
 detekt {
+    config = files("src/main/resources/config/detekt/detekt-config.yml")
     parallel = true
     ignoreFailures = false
     autoCorrect = true
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "11"
 }
 
 tasks.withType<Detekt>().configureEach {
@@ -52,11 +59,13 @@ tasks.withType<Detekt>().configureEach {
         sarif.required.set(false)
         md.required.set(false)
     }
+    jvmTarget = "11"
 }
 
-tasks.withType<Detekt>().configureEach {
-    jvmTarget = "11"
-}
 tasks.withType<DetektCreateBaselineTask>().configureEach {
     jvmTarget = "11"
+}
+
+tasks.test {
+    useJUnitPlatform()
 }

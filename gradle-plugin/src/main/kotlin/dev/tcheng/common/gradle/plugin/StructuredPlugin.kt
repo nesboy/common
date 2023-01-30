@@ -10,11 +10,11 @@ abstract class StructuredPlugin<E>(
 ) : Plugin<Project> {
 
     override fun apply(project: Project) {
-        this.configureTasks(
-            project = project,
-            extension = project.extensions.create(extensionName, extensionClass)
-        )
+        val extension = project.extensions.create(extensionName, extensionClass)
+        this.configurePlugins(project, extension)
+        this.configureTasks(project, extension)
     }
 
+    abstract fun configurePlugins(project: Project, extension: E)
     abstract fun configureTasks(project: Project, extension: E)
 }

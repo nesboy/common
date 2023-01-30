@@ -9,6 +9,10 @@ class EchoPlugin : StructuredPlugin<EchoPluginExtension>(
     extensionClass = EchoPluginExtension::class.java
 ) {
 
+    override fun configurePlugins(project: Project, extension: EchoPluginExtension) {
+        // no-op
+    }
+
     override fun configureTasks(project: Project, extension: EchoPluginExtension) {
         project.tasks.register("echo", EchoTask::class.java)
     }
