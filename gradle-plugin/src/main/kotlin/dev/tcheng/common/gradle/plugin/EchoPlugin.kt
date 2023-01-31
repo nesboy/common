@@ -14,6 +14,8 @@ class EchoPlugin : StructuredPlugin<EchoPluginExtension>(
     }
 
     override fun configureTasks(project: Project, extension: EchoPluginExtension) {
-        project.tasks.register("echo", EchoTask::class.java)
+        project.tasks.register("echo", EchoTask::class.java) {
+            it.value.set(extension.value)
+        }
     }
 }

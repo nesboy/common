@@ -14,16 +14,16 @@ abstract class EchoPluginExtension @Inject constructor(
     project: Project
 ) : StructuredPluginExtension(project) {
     val value: Property<String> = objectFactory.property(String::class.java)
-        .apply { set("Testing") }
+        .convention("Testing")
 }
 
 abstract class DetektStandardsPluginExtension @Inject constructor(
     project: Project
 ) : StructuredPluginExtension(project) {
     val jvmVersion: Property<JavaVersion> = objectFactory.property(JavaVersion::class.java)
-        .apply { set(JavaVersion.VERSION_11) }
+        .convention(JavaVersion.VERSION_11)
     val ignoreFailures: Property<Boolean> = objectFactory.property(Boolean::class.java)
-        .apply { set(false) }
+        .convention(false)
     val autoCorrect: Property<Boolean> = objectFactory.property(Boolean::class.java)
-        .apply { set(true) }
+        .convention(true)
 }
