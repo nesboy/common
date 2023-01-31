@@ -27,3 +27,10 @@ abstract class DetektStandardsPluginExtension @Inject constructor(
     val autoCorrect: Property<Boolean> = objectFactory.property(Boolean::class.java)
         .convention(true)
 }
+
+abstract class UnitTestStandardsPluginExtension @Inject constructor(
+    project: Project
+) : StructuredPluginExtension(project) {
+    val ignoreFailures: Property<Boolean> = objectFactory.property(Boolean::class.java)
+        .convention(false)
+}

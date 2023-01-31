@@ -1,6 +1,7 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "dev.tcheng.common"
 version = "0.0.1"
@@ -39,6 +40,10 @@ gradlePlugin {
             id = "$classpathPrefix.echo"
             implementationClass = "$classpathPrefix.EchoPlugin"
         }
+        create("unitTestStandardsPlugin") {
+            id = "$classpathPrefix.unit-test-standards"
+            implementationClass = "$classpathPrefix.UnitTestStandardsPlugin"
+        }
     }
 }
 
@@ -70,4 +75,15 @@ tasks.withType<DetektCreateBaselineTask>().configureEach {
 
 tasks.test {
     useJUnitPlatform()
+
+    testLogging {
+        showStandardStreams = true
+        events = setOf(
+            TestLogEvent.PASSED,
+            TestLogEvent.FAILED,
+            TestLogEvent.SKIPPED
+        )
+    }
+
+    ignoreFailures = false
 }
