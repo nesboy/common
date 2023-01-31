@@ -26,6 +26,13 @@ open class EchoPluginExtension @Inject constructor(
         .convention("Testing")
 }
 
+open class KotlinPresetPluginExtension @Inject constructor(
+    objectFactory: ObjectFactory
+) : StructuredPluginExtension {
+    val jvmVersion: Property<JavaVersion> = objectFactory.property(JavaVersion::class.java)
+        .convention(JavaVersion.VERSION_11)
+}
+
 open class KoverPresetPluginExtension @Inject constructor(
     objectFactory: ObjectFactory
 ) : StructuredPluginExtension {

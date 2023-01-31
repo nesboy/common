@@ -23,9 +23,11 @@ repositories {
 dependencies {
     val detektVersion: String by project
     val junitVersion: String by project
+    val kotlinVersion: String by project
     val koverVersion: String by project
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     implementation("org.jetbrains.kotlinx:kover:$koverVersion")
 
     testImplementation(kotlin("test"))
@@ -45,6 +47,10 @@ gradlePlugin {
         create("echoPlugin") {
             id = "$classpathPrefix.echo"
             implementationClass = "$classpathPrefix.EchoPlugin"
+        }
+        create("kotlinPresetPlugin") {
+            id = "$classpathPrefix.kotlin-preset"
+            implementationClass = "$classpathPrefix.KotlinPresetPlugin"
         }
         create("koverPresetPlugin") {
             id = "$classpathPrefix.kover-preset"
