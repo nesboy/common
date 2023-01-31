@@ -4,8 +4,7 @@ version = "0.0.1"
 plugins {
     listOf(
         "kotlin-preset",
-        "detekt-preset",
-        "test-suite-preset"
+        "detekt-preset"
     ).forEach { id("dev.tcheng.common.gradle.plugin.$it") }
     `java-library`
 }

@@ -1,7 +1,7 @@
 rootProject.name = "common"
 
 include(
-    "exception"
+    "model"
 )
 
 includeBuild("gradle-plugin")
