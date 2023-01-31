@@ -1,6 +1,6 @@
 package dev.tcheng.common.gradle.plugin
 
-import dev.tcheng.common.gradle.model.KoverStandardsPluginExtension
+import dev.tcheng.common.gradle.model.KoverPresetPluginExtension
 import kotlinx.kover.KoverPlugin
 import kotlinx.kover.api.CounterType
 import kotlinx.kover.api.KoverProjectConfig
@@ -8,16 +8,16 @@ import kotlinx.kover.api.VerificationTarget
 import kotlinx.kover.api.VerificationValueType
 import org.gradle.api.Project
 
-class KoverStandardsPlugin : StructuredPlugin<KoverStandardsPluginExtension>(
-    extensionName = "coverage-standards",
-    extensionClass = KoverStandardsPluginExtension::class.java
+class KoverPresetPlugin : StructuredPlugin<KoverPresetPluginExtension>(
+    extensionName = "coveragePreset",
+    extensionClass = KoverPresetPluginExtension::class.java
 ) {
 
-    override fun applyPlugins(project: Project, extension: KoverStandardsPluginExtension) {
+    override fun applyPlugins(project: Project, extension: KoverPresetPluginExtension) {
         project.pluginManager.apply(KoverPlugin::class.java)
     }
 
-    override fun configurePlugins(project: Project, extension: KoverStandardsPluginExtension) {
+    override fun configurePlugins(project: Project, extension: KoverPresetPluginExtension) {
         project.extensions.configure(KoverProjectConfig::class.java) { config ->
             config.apply {
                 filters { filter ->
@@ -71,7 +71,7 @@ class KoverStandardsPlugin : StructuredPlugin<KoverStandardsPluginExtension>(
         }
     }
 
-    override fun configureTasks(project: Project, extension: KoverStandardsPluginExtension) {
+    override fun configureTasks(project: Project, extension: KoverPresetPluginExtension) {
         // no-op
     }
 }

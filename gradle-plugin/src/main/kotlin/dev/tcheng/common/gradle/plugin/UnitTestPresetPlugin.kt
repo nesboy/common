@@ -1,24 +1,24 @@
 package dev.tcheng.common.gradle.plugin
 
-import dev.tcheng.common.gradle.model.UnitTestPluginExtension
+import dev.tcheng.common.gradle.model.UnitTestPresetPluginExtension
 import org.gradle.api.Project
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
-class UnitTestPlugin : StructuredPlugin<UnitTestPluginExtension>(
-    extensionName = "unit-test-standards",
-    extensionClass = UnitTestPluginExtension::class.java
+class UnitTestPresetPlugin : StructuredPlugin<UnitTestPresetPluginExtension>(
+    extensionName = "unitTestPreset",
+    extensionClass = UnitTestPresetPluginExtension::class.java
 ) {
 
-    override fun applyPlugins(project: Project, extension: UnitTestPluginExtension) {
+    override fun applyPlugins(project: Project, extension: UnitTestPresetPluginExtension) {
         // no-op
     }
 
-    override fun configurePlugins(project: Project, extension: UnitTestPluginExtension) {
+    override fun configurePlugins(project: Project, extension: UnitTestPresetPluginExtension) {
         // no-op
     }
 
-    override fun configureTasks(project: Project, extension: UnitTestPluginExtension) {
+    override fun configureTasks(project: Project, extension: UnitTestPresetPluginExtension) {
         project.tasks.withType(Test::class.java) { task ->
             task.apply {
                 useJUnitPlatform()

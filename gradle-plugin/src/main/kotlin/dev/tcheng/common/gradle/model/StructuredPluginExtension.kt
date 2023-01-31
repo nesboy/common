@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 sealed interface StructuredPluginExtension
 
-abstract class DetektStandardsPluginExtension @Inject constructor(
+open class DetektPresetPluginExtension @Inject constructor(
     objectFactory: ObjectFactory
 ) : StructuredPluginExtension {
     val jvmVersion: Property<JavaVersion> = objectFactory.property(JavaVersion::class.java)
@@ -19,14 +19,14 @@ abstract class DetektStandardsPluginExtension @Inject constructor(
         .convention(true)
 }
 
-abstract class EchoPluginExtension @Inject constructor(
+open class EchoPluginExtension @Inject constructor(
     objectFactory: ObjectFactory
 ) : StructuredPluginExtension {
     val value: Property<String> = objectFactory.property(String::class.java)
         .convention("Testing")
 }
 
-abstract class KoverStandardsPluginExtension @Inject constructor(
+open class KoverPresetPluginExtension @Inject constructor(
     objectFactory: ObjectFactory
 ) : StructuredPluginExtension {
     val excludeClasses: ListProperty<String> = objectFactory.listProperty(String::class.java)
@@ -41,14 +41,14 @@ abstract class KoverStandardsPluginExtension @Inject constructor(
         .convention(true)
 }
 
-abstract class TestSuitePluginExtension @Inject constructor(
+open class TestSuitePresetPluginExtension @Inject constructor(
     objectFactory: ObjectFactory
 ) : StructuredPluginExtension {
     val enableIntegTest: Property<Boolean> = objectFactory.property(Boolean::class.java)
         .convention(false)
 }
 
-abstract class UnitTestPluginExtension @Inject constructor(
+open class UnitTestPresetPluginExtension @Inject constructor(
     objectFactory: ObjectFactory
 ) : StructuredPluginExtension {
     val ignoreFailures: Property<Boolean> = objectFactory.property(Boolean::class.java)

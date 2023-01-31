@@ -1,6 +1,6 @@
 package dev.tcheng.common.gradle.plugin
 
-import dev.tcheng.common.gradle.model.TestSuitePluginExtension
+import dev.tcheng.common.gradle.model.TestSuitePresetPluginExtension
 import org.gradle.api.Incubating
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin
@@ -10,19 +10,19 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.testing.base.TestingExtension
 
 @Incubating
-class TestSuitePlugin : StructuredPlugin<TestSuitePluginExtension>(
-    extensionName = "test-suite",
-    extensionClass = TestSuitePluginExtension::class.java
+class TestSuitePresetPlugin : StructuredPlugin<TestSuitePresetPluginExtension>(
+    extensionName = "testSuitePreset",
+    extensionClass = TestSuitePresetPluginExtension::class.java
 ) {
 
-    override fun applyPlugins(project: Project, extension: TestSuitePluginExtension) {
+    override fun applyPlugins(project: Project, extension: TestSuitePresetPluginExtension) {
         project.pluginManager.apply {
             apply(JavaPlugin::class.java)
             apply(JvmTestSuitePlugin::class.java)
         }
     }
 
-    override fun configurePlugins(project: Project, extension: TestSuitePluginExtension) {
+    override fun configurePlugins(project: Project, extension: TestSuitePresetPluginExtension) {
         project.extensions.configure(TestingExtension::class.java) { config ->
             config.suites.apply {
                 val testSuite = named("test", JvmTestSuite::class.java)
@@ -83,11 +83,12 @@ class TestSuitePlugin : StructuredPlugin<TestSuitePluginExtension>(
         }
     }
 
-    override fun configureTasks(project: Project, extension: TestSuitePluginExtension) {
+    override fun configureTasks(project: Project, extension: TestSuitePresetPluginExtension) {
         if (extension.enableIntegTest.get()) {
-            val integTestSuite = project.extensions.getByType(TestingExtension::class.java).suites.named("integTest")
-            project.tasks.named("check").configure {
-                it.dependsOn(integTestSuite.get())
+            project.extensions.getByType(TestingExtension::class.java).suites.named("integTest").let { suite ->
+                project.tasks.named("check").configure {
+                    it.dependsOn(suite.get())
+                }
             }
         }
     }

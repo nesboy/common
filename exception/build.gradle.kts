@@ -5,8 +5,8 @@ version = "0.0.1"
 
 plugins {
     kotlin("jvm")
-    id("dev.tcheng.common.gradle.plugin.detekt-standards")
-    id("dev.tcheng.common.gradle.plugin.test-suite")
+    id("dev.tcheng.common.gradle.plugin.detekt-preset")
+    id("dev.tcheng.common.gradle.plugin.test-suite-preset")
     `java-library`
 }
 
@@ -21,7 +21,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
 }
 
-`detekt-standards` {
+detektPreset {
     ignoreFailures.set(true)
 }
 

@@ -1,22 +1,22 @@
 package dev.tcheng.common.gradle.plugin
 
-import dev.tcheng.common.gradle.model.DetektStandardsPluginExtension
+import dev.tcheng.common.gradle.model.DetektPresetPluginExtension
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 import io.gitlab.arturbosch.detekt.DetektPlugin
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.Project
 
-class DetektStandardsPlugin : StructuredPlugin<DetektStandardsPluginExtension>(
-    extensionName = "detekt-standards",
-    extensionClass = DetektStandardsPluginExtension::class.java
+class DetektPresetPlugin : StructuredPlugin<DetektPresetPluginExtension>(
+    extensionName = "detektPreset",
+    extensionClass = DetektPresetPluginExtension::class.java
 ) {
 
-    override fun applyPlugins(project: Project, extension: DetektStandardsPluginExtension) {
+    override fun applyPlugins(project: Project, extension: DetektPresetPluginExtension) {
         project.pluginManager.apply(DetektPlugin::class.java)
     }
 
-    override fun configurePlugins(project: Project, extension: DetektStandardsPluginExtension) {
+    override fun configurePlugins(project: Project, extension: DetektPresetPluginExtension) {
         project.extensions.configure(DetektExtension::class.java) {
             it.apply {
                 parallel = true
@@ -26,7 +26,7 @@ class DetektStandardsPlugin : StructuredPlugin<DetektStandardsPluginExtension>(
         }
     }
 
-    override fun configureTasks(project: Project, extension: DetektStandardsPluginExtension) {
+    override fun configureTasks(project: Project, extension: DetektPresetPluginExtension) {
         project.tasks.withType(Detekt::class.java).configureEach {
             it.reports.apply {
                 html.required.set(true)

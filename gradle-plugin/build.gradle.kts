@@ -38,25 +38,25 @@ gradlePlugin {
     val classpathPrefix = "dev.tcheng.common.gradle.plugin"
 
     plugins {
-        create("detektStandardsPlugin") {
-            id = "$classpathPrefix.detekt-standards"
-            implementationClass = "$classpathPrefix.DetektStandardsPlugin"
+        create("detektPresetPlugin") {
+            id = "$classpathPrefix.detekt-preset"
+            implementationClass = "$classpathPrefix.DetektPresetPlugin"
         }
         create("echoPlugin") {
             id = "$classpathPrefix.echo"
             implementationClass = "$classpathPrefix.EchoPlugin"
         }
-        create("koverStandardsPlugin") {
-            id = "$classpathPrefix.kover-standards"
-            implementationClass = "$classpathPrefix.KoverStandardsPlugin"
+        create("koverPresetPlugin") {
+            id = "$classpathPrefix.kover-preset"
+            implementationClass = "$classpathPrefix.KoverPresetPlugin"
         }
-        create("testSuitePlugin") {
-            id = "$classpathPrefix.test-suite"
-            implementationClass = "$classpathPrefix.TestSuitePlugin"
+        create("testSuitePresetPlugin") {
+            id = "$classpathPrefix.test-suite-preset"
+            implementationClass = "$classpathPrefix.TestSuitePresetPlugin"
         }
-        create("unitTestPlugin") {
-            id = "$classpathPrefix.unit-test"
-            implementationClass = "$classpathPrefix.UnitTestPlugin"
+        create("unitTestPresetPlugin") {
+            id = "$classpathPrefix.unit-test-preset"
+            implementationClass = "$classpathPrefix.UnitTestPresetPlugin"
         }
     }
 }
