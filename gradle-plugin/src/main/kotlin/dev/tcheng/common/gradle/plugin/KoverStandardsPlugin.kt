@@ -1,6 +1,7 @@
 package dev.tcheng.common.gradle.plugin
 
 import dev.tcheng.common.gradle.model.KoverStandardsPluginExtension
+import kotlinx.kover.KoverPlugin
 import kotlinx.kover.api.CounterType
 import kotlinx.kover.api.KoverProjectConfig
 import kotlinx.kover.api.VerificationTarget
@@ -11,6 +12,10 @@ class KoverStandardsPlugin : StructuredPlugin<KoverStandardsPluginExtension>(
     extensionName = "coverage-standards",
     extensionClass = KoverStandardsPluginExtension::class.java
 ) {
+
+    override fun applyPlugins(project: Project, extension: KoverStandardsPluginExtension) {
+        project.pluginManager.apply(KoverPlugin::class.java)
+    }
 
     override fun configurePlugins(project: Project, extension: KoverStandardsPluginExtension) {
         project.extensions.configure(KoverProjectConfig::class.java) { config ->

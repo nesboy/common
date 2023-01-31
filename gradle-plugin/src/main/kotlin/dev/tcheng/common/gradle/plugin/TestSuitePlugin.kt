@@ -15,10 +15,14 @@ class TestSuitePlugin : StructuredPlugin<TestSuitePluginExtension>(
     extensionClass = TestSuitePluginExtension::class.java
 ) {
 
-    override fun configurePlugins(project: Project, extension: TestSuitePluginExtension) {
-        project.pluginManager.apply(JavaPlugin::class.java)
-        project.pluginManager.apply(JvmTestSuitePlugin::class.java)
+    override fun applyPlugins(project: Project, extension: TestSuitePluginExtension) {
+        project.pluginManager.apply {
+            apply(JavaPlugin::class.java)
+            apply(JvmTestSuitePlugin::class.java)
+        }
+    }
 
+    override fun configurePlugins(project: Project, extension: TestSuitePluginExtension) {
         project.extensions.configure(TestingExtension::class.java) { config ->
             config.suites.apply {
                 val testSuite = named("test", JvmTestSuite::class.java)

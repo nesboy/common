@@ -12,9 +12,11 @@ class DetektStandardsPlugin : StructuredPlugin<DetektStandardsPluginExtension>(
     extensionClass = DetektStandardsPluginExtension::class.java
 ) {
 
-    override fun configurePlugins(project: Project, extension: DetektStandardsPluginExtension) {
+    override fun applyPlugins(project: Project, extension: DetektStandardsPluginExtension) {
         project.pluginManager.apply(DetektPlugin::class.java)
+    }
 
+    override fun configurePlugins(project: Project, extension: DetektStandardsPluginExtension) {
         project.extensions.configure(DetektExtension::class.java) {
             it.apply {
                 parallel = true

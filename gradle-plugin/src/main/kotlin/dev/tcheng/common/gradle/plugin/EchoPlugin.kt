@@ -9,6 +9,10 @@ class EchoPlugin : StructuredPlugin<EchoPluginExtension>(
     extensionClass = EchoPluginExtension::class.java
 ) {
 
+    override fun applyPlugins(project: Project, extension: EchoPluginExtension) {
+        // no-op
+    }
+
     override fun configurePlugins(project: Project, extension: EchoPluginExtension) {
         // no-op
     }

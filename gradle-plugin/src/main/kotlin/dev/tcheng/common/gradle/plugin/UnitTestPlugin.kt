@@ -9,6 +9,11 @@ class UnitTestPlugin : StructuredPlugin<UnitTestPluginExtension>(
     extensionName = "unit-test-standards",
     extensionClass = UnitTestPluginExtension::class.java
 ) {
+
+    override fun applyPlugins(project: Project, extension: UnitTestPluginExtension) {
+        // no-op
+    }
+
     override fun configurePlugins(project: Project, extension: UnitTestPluginExtension) {
         // no-op
     }
