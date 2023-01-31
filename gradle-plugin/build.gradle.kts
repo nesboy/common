@@ -20,9 +20,11 @@ dependencies {
     val junitVersion: String by project
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion")
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detektVersion")
+
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detektVersion")
 }
 
 gradlePlugin {

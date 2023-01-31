@@ -1,10 +1,4 @@
-rootProject.name = "common"
-
-include(
-    "exception"
-)
-
-includeBuild("gradle-plugin")
+rootProject.name = "gradle-plugin"
 
 pluginManagement {
     val kotlinVersion: String by settings
