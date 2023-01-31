@@ -1,5 +1,8 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
+import kotlinx.kover.api.CounterType
+import kotlinx.kover.api.VerificationTarget
+import kotlinx.kover.api.VerificationValueType
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -9,6 +12,7 @@ version = "0.0.1"
 plugins {
     kotlin("jvm")
     id("io.gitlab.arturbosch.detekt")
+    id("org.jetbrains.kotlinx.kover")
     `java-gradle-plugin`
 }
 
@@ -52,6 +56,52 @@ detekt {
     parallel = true
     ignoreFailures = false
     autoCorrect = true
+}
+
+kover {
+    isDisabled.set(false)
+
+    filters {
+        classes {
+            excludes += listOf("**.model.**")
+        }
+    }
+
+    xmlReport {
+        onCheck.set(false)
+    }
+
+    htmlReport {
+        onCheck.set(true)
+    }
+
+    verify {
+        onCheck.set(true)
+
+        rule {
+            name = "LineCoverage"
+            isEnabled = false
+            target = VerificationTarget.CLASS
+
+            bound {
+                minValue = 90
+                counter = CounterType.LINE
+                valueType = VerificationValueType.COVERED_PERCENTAGE
+            }
+        }
+
+        rule {
+            name = "BranchCoverage"
+            isEnabled = false
+            target = VerificationTarget.CLASS
+
+            bound {
+                minValue = 80
+                counter = CounterType.BRANCH
+                valueType = VerificationValueType.COVERED_PERCENTAGE
+            }
+        }
+    }
 }
 
 tasks.withType<KotlinCompile> {

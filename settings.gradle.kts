@@ -7,11 +7,13 @@ include(
 includeBuild("gradle-plugin")
 
 pluginManagement {
-    val kotlinVersion: String by settings
     val detektVersion: String by settings
+    val kotlinVersion: String by settings
+    val koverVersion: String by settings
 
     plugins {
-        kotlin("jvm").version(kotlinVersion)
         id("io.gitlab.arturbosch.detekt").version(detektVersion)
+        kotlin("jvm").version(kotlinVersion)
+        id("org.jetbrains.kotlinx.kover").version(koverVersion)
     }
 }
