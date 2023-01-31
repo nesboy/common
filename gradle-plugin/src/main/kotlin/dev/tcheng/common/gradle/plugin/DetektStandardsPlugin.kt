@@ -3,6 +3,7 @@ package dev.tcheng.common.gradle.plugin
 import dev.tcheng.common.gradle.model.DetektStandardsPluginExtension
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
+import io.gitlab.arturbosch.detekt.DetektPlugin
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.Project
 
@@ -12,6 +13,8 @@ class DetektStandardsPlugin : StructuredPlugin<DetektStandardsPluginExtension>(
 ) {
 
     override fun configurePlugins(project: Project, extension: DetektStandardsPluginExtension) {
+        project.pluginManager.apply(DetektPlugin::class.java)
+
         project.extensions.configure(DetektExtension::class.java) {
             it.apply {
                 parallel = true

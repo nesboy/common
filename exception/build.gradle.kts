@@ -5,7 +5,6 @@ version = "0.0.1"
 
 plugins {
     kotlin("jvm")
-    id("io.gitlab.arturbosch.detekt")
     id("dev.tcheng.common.gradle.plugin.detekt-standards")
     id("dev.tcheng.common.gradle.plugin.test-suite")
     `java-library`
@@ -16,13 +15,10 @@ repositories {
 }
 
 dependencies {
-    val detektVersion: String by project
     val junitVersion: String by project
 
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detektVersion")
 }
 
 `detekt-standards` {
