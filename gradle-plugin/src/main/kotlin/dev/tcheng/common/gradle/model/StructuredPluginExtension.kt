@@ -8,21 +8,6 @@ import javax.inject.Inject
 
 sealed interface StructuredPluginExtension
 
-abstract class CoverageStandardsPluginExtension @Inject constructor(
-    objectFactory: ObjectFactory
-) : StructuredPluginExtension {
-    val excludeClasses: ListProperty<String> = objectFactory.listProperty(String::class.java)
-        .convention(emptyList())
-    val minimumLineCoveragePercentage: Property<Int> = objectFactory.property(Int::class.java)
-        .convention(90)
-    val minimumBranchCoveragePercentage: Property<Int> = objectFactory.property(Int::class.java)
-        .convention(80)
-    val enableLineCoverage: Property<Boolean> = objectFactory.property(Boolean::class.java)
-        .convention(true)
-    val enableBranchCoverage: Property<Boolean> = objectFactory.property(Boolean::class.java)
-        .convention(true)
-}
-
 abstract class DetektStandardsPluginExtension @Inject constructor(
     objectFactory: ObjectFactory
 ) : StructuredPluginExtension {
@@ -41,7 +26,22 @@ abstract class EchoPluginExtension @Inject constructor(
         .convention("Testing")
 }
 
-abstract class UnitTestStandardsPluginExtension @Inject constructor(
+abstract class KoverStandardsPluginExtension @Inject constructor(
+    objectFactory: ObjectFactory
+) : StructuredPluginExtension {
+    val excludeClasses: ListProperty<String> = objectFactory.listProperty(String::class.java)
+        .convention(emptyList())
+    val minimumLineCoveragePercentage: Property<Int> = objectFactory.property(Int::class.java)
+        .convention(90)
+    val minimumBranchCoveragePercentage: Property<Int> = objectFactory.property(Int::class.java)
+        .convention(80)
+    val enableLineCoverage: Property<Boolean> = objectFactory.property(Boolean::class.java)
+        .convention(true)
+    val enableBranchCoverage: Property<Boolean> = objectFactory.property(Boolean::class.java)
+        .convention(true)
+}
+
+abstract class UnitTestPluginExtension @Inject constructor(
     objectFactory: ObjectFactory
 ) : StructuredPluginExtension {
     val ignoreFailures: Property<Boolean> = objectFactory.property(Boolean::class.java)

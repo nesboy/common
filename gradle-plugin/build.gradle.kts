@@ -38,10 +38,6 @@ gradlePlugin {
     val classpathPrefix = "dev.tcheng.common.gradle.plugin"
 
     plugins {
-        create("coverageStandardsPlugin") {
-            id = "$classpathPrefix.coverage-standards"
-            implementationClass = "$classpathPrefix.CoverageStandardsPlugin"
-        }
         create("detektStandardsPlugin") {
             id = "$classpathPrefix.detekt-standards"
             implementationClass = "$classpathPrefix.DetektStandardsPlugin"
@@ -50,9 +46,13 @@ gradlePlugin {
             id = "$classpathPrefix.echo"
             implementationClass = "$classpathPrefix.EchoPlugin"
         }
-        create("unitTestStandardsPlugin") {
-            id = "$classpathPrefix.unit-test-standards"
-            implementationClass = "$classpathPrefix.UnitTestStandardsPlugin"
+        create("koverStandardsPlugin") {
+            id = "$classpathPrefix.kover-standards"
+            implementationClass = "$classpathPrefix.KoverStandardsPlugin"
+        }
+        create("unitTestPlugin") {
+            id = "$classpathPrefix.unit-test"
+            implementationClass = "$classpathPrefix.UnitTestPlugin"
         }
     }
 }

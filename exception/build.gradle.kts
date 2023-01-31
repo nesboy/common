@@ -7,6 +7,7 @@ plugins {
     kotlin("jvm")
     id("io.gitlab.arturbosch.detekt")
     id("dev.tcheng.common.gradle.plugin.detekt-standards")
+    id("dev.tcheng.common.gradle.plugin.unit-test")
     `java-library`
 }
 
@@ -30,8 +31,4 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
-}
-
-tasks.test {
-    useJUnitPlatform()
 }
