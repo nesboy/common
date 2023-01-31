@@ -23,8 +23,10 @@ repositories {
 dependencies {
     val detektVersion: String by project
     val junitVersion: String by project
+    val koverVersion: String by project
 
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion")
+    implementation("org.jetbrains.kotlinx:kover:$koverVersion")
 
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
@@ -36,6 +38,10 @@ gradlePlugin {
     val classpathPrefix = "dev.tcheng.common.gradle.plugin"
 
     plugins {
+        create("coverageStandardsPlugin") {
+            id = "$classpathPrefix.coverage-standards"
+            implementationClass = "$classpathPrefix.CoverageStandardsPlugin"
+        }
         create("detektStandardsPlugin") {
             id = "$classpathPrefix.detekt-standards"
             implementationClass = "$classpathPrefix.DetektStandardsPlugin"
