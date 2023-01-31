@@ -50,6 +50,10 @@ gradlePlugin {
             id = "$classpathPrefix.kover-standards"
             implementationClass = "$classpathPrefix.KoverStandardsPlugin"
         }
+        create("testSuitePlugin") {
+            id = "$classpathPrefix.test-suite"
+            implementationClass = "$classpathPrefix.TestSuitePlugin"
+        }
         create("unitTestPlugin") {
             id = "$classpathPrefix.unit-test"
             implementationClass = "$classpathPrefix.UnitTestPlugin"

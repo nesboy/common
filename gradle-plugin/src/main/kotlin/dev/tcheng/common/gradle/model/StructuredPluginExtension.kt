@@ -41,6 +41,13 @@ abstract class KoverStandardsPluginExtension @Inject constructor(
         .convention(true)
 }
 
+abstract class TestSuitePluginExtension @Inject constructor(
+    objectFactory: ObjectFactory
+) : StructuredPluginExtension {
+    val enableIntegTest: Property<Boolean> = objectFactory.property(Boolean::class.java)
+        .convention(false)
+}
+
 abstract class UnitTestPluginExtension @Inject constructor(
     objectFactory: ObjectFactory
 ) : StructuredPluginExtension {

@@ -7,7 +7,7 @@ plugins {
     kotlin("jvm")
     id("io.gitlab.arturbosch.detekt")
     id("dev.tcheng.common.gradle.plugin.detekt-standards")
-    id("dev.tcheng.common.gradle.plugin.unit-test")
+    id("dev.tcheng.common.gradle.plugin.test-suite")
     `java-library`
 }
 
