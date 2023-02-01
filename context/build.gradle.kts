@@ -7,18 +7,18 @@ plugins {
         "detekt-preset",
         "test-suite-preset",
         "kover-preset"
-    ).forEach { id("dev.tcheng.common.gradle.plugin.$it") }
+    ).forEach { id("dev.tcheng.gradle.plugin.$it") }
     `java-library`
 }
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
     val junitVersion: String by project
 
-    compileOnly(project(":model"))
     implementation(project(":model")) // this causes problems
 
     testImplementation(kotlin("test"))

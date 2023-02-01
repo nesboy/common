@@ -5,12 +5,13 @@ plugins {
     listOf(
         "kotlin-preset",
         "detekt-preset"
-    ).forEach { id("dev.tcheng.common.gradle.plugin.$it") }
+    ).forEach { id("dev.tcheng.gradle.plugin.$it") }
     `java-library`
 }
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
