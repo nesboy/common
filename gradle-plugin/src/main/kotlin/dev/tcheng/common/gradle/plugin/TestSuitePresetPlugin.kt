@@ -30,6 +30,10 @@ class TestSuitePresetPlugin : StructuredPlugin<TestSuitePresetPluginExtension>(
                     suite.apply {
                         useJUnitJupiter()
 
+                        dependencies {
+                            it.implementation.add(it.project())
+                        }
+
                         targets.all { target ->
                             target.testTask.configure { task ->
                                 task.apply {
@@ -58,6 +62,7 @@ class TestSuitePresetPlugin : StructuredPlugin<TestSuitePresetPluginExtension>(
                             dependencies {
                                 it.implementation.add(it.project())
                             }
+
                             targets.all { target ->
                                 target.testTask.configure { task ->
                                     task.apply {

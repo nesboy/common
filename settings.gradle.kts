@@ -1,10 +1,10 @@
 rootProject.name = "common"
 
 include(
+    "context",
     "model"
 )
 
-includeBuild("gradle-plugin")
-
 pluginManagement {
+    includeBuild("gradle-plugin")
 }

@@ -15,7 +15,3 @@ repositories {
 
 dependencies {
 }
-
-detektPreset {
-    ignoreFailures.set(true)
-}
