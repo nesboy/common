@@ -26,7 +26,7 @@ class DetektPresetPlugin @Inject constructor(
 
         project.extensions.configure(DetektExtension::class.java) {
             it.apply {
-                config = objectFactory.fileCollection().from("${project.buildDir}/$DETEKT_CONFIG_PATH")
+                config = objectFactory.fileCollection().from("${project.buildDir}/resources/main/$DETEKT_CONFIG_PATH")
                 parallel = true
                 ignoreFailures = extension.ignoreFailures.get()
                 autoCorrect = extension.autoCorrect.get()
