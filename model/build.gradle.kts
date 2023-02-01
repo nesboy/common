@@ -14,10 +14,6 @@ repositories {
 }
 
 dependencies {
-    val junitVersion: String by project
-
-    testImplementation(kotlin("test"))
-    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
 }
 
 detektPreset {
