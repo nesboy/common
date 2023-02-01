@@ -20,7 +20,7 @@ class ContextManagerTest {
     @Nested
     inner class PutAndGet {
         @Test
-        fun `WHEN correct type is provided THEN return expected value `() {
+        fun `WHEN correct type is provided THEN return expected value`() {
             // prepare
             val expectedValue = 1
             ContextManager.put(key = DayOfWeek.FRIDAY, value = expectedValue)
@@ -53,7 +53,7 @@ class ContextManagerTest {
     @Nested
     inner class PutAndGetRequired {
         @Test
-        fun `WHEN correct type is provided THEN return expected value `() {
+        fun `WHEN correct type is provided THEN return expected value`() {
             // prepare
             val expectedValue = 1
             ContextManager.put(key = DayOfWeek.FRIDAY, value = expectedValue)
