@@ -1,5 +1,3 @@
-import gradle.kotlin.dsl.accessors._d67b3de0423560813212b9eec988af78.detekt
-import gradle.kotlin.dsl.accessors._d67b3de0423560813212b9eec988af78.detektPlugins
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 
