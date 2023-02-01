@@ -13,6 +13,10 @@ kover {
         classes {
             excludes += listOf("**.model.**")
         }
+
+        annotations {
+            excludes += listOf("IgnoreCoverage")
+        }
     }
 
     xmlReport {
