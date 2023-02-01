@@ -39,6 +39,7 @@ class DetektPresetPlugin @Inject constructor(
 
         project.tasks.withType(Detekt::class.java).configureEach {
             it.apply {
+                dependsOn(project.tasks.named("processResources"))
                 reports.apply {
                     html.required.set(true)
                     sarif.required.set(false)
