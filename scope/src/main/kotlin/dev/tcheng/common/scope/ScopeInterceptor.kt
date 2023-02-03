@@ -1,28 +1,35 @@
 package dev.tcheng.common.scope
 
+import dev.tcheng.common.model.annotation.IgnoreCoverage
 import dev.tcheng.common.scope.manager.MetricManager
 import dev.tcheng.common.scope.manager.ScopeManager
 import dev.tcheng.common.scope.model.ContextConfig
 import dev.tcheng.common.scope.model.Option
+import dev.tcheng.common.scope.processor.ContextProcessor
 import org.apache.logging.log4j.kotlin.Logging
-import tech.units.indriya.AbstractUnit
 
+@IgnoreCoverage
 class ScopeInterceptor(
     private val contextConfig: ContextConfig = ContextConfig(),
     private val options: Set<Option> = emptySet(),
     private val contextProcessors: List<ContextProcessor> = emptyList()
 ) : Logging {
 
-    fun <T> intercept(isChild: Boolean = false, operation: () -> T?): T? {
+    fun <T> intercept(
+        isChild: Boolean = false,
+        optionOverrides: Set<Option>? = null,
+        operation: () -> T?
+    ): T? {
         this.prepareScope(isChild)
+        val options = optionOverrides ?: options
 
         val result = runCatching {
-            this.invokeOperation(operation)
+            this.handleOperation(options, operation)
         }.onFailure {
-            this.handleThrowable(throwable = it)
+            this.handleThrowable(options, throwable = it)
         }
 
-        this.finalizeScope()
+        this.finalizeScope(options)
         return result.getOrThrow()
     }
 
@@ -34,7 +41,7 @@ class ScopeInterceptor(
         }
     }
 
-    private fun finalizeScope() {
+    private fun finalizeScope(options: Set<Option>) {
         ScopeManager.endScope().also {
             if (options.contains(Option.CONTEXT_LOG)) {
                 logger.info("Scope ended with $it")
@@ -46,7 +53,7 @@ class ScopeInterceptor(
         }
     }
 
-    private fun <T> invokeOperation(operation: () -> T?): T? {
+    private fun <T> handleOperation(options: Set<Option>, operation: () -> T?): T? {
         return if (options.contains(Option.OPERATION_TIME_METRIC)) {
             MetricManager.addTimedMetric(key = "Scope.OperationTime") { operation.invoke() }
         } else {
@@ -54,16 +61,13 @@ class ScopeInterceptor(
         }
     }
 
-    private fun handleThrowable(throwable: Throwable) {
+    private fun handleThrowable(options: Set<Option>, throwable: Throwable) {
         if (options.contains(Option.OPERATION_FAILURE_LOG)) {
             logger.error("Scope operation failed", throwable)
         }
 
         if (options.contains(Option.OPERATION_FAILURE_METRIC)) {
-            MetricManager.addMetric(
-                key = "Scope.OperationFailure.${throwable.javaClass.simpleName}",
-                unit = AbstractUnit.ONE
-            )
+            MetricManager.addCountMetric("Scope.OperationFailure.${throwable.javaClass.simpleName}")
         }
     }
 }

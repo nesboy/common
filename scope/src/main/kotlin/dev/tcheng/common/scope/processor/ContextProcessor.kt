@@ -1,4 +1,4 @@
-package dev.tcheng.common.scope
+package dev.tcheng.common.scope.processor
 
 import dev.tcheng.common.scope.model.Context
 import dev.tcheng.common.scope.model.ContextConfig

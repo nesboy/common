@@ -5,6 +5,7 @@ import dev.tcheng.common.model.exception.InternalException
 import dev.tcheng.common.scope.model.Metric
 import dev.tcheng.common.scope.model.MetricAggregation
 import dev.tcheng.common.scope.model.MetricDatapoint
+import tech.units.indriya.AbstractUnit
 import tech.units.indriya.quantity.Quantities
 import tech.units.indriya.unit.Units
 import java.time.Duration
@@ -19,7 +20,7 @@ object MetricManager {
 
     fun <Q : Quantity<Q>> addMetric(
         key: String,
-        value: Double = 1.0,
+        value: Double,
         unit: Unit<Q>,
         aggregation: MetricAggregation = MetricAggregation.DISCRETE
     ) {
@@ -54,6 +55,12 @@ object MetricManager {
         unit: Unit<Q>,
         aggregation: MetricAggregation = MetricAggregation.DISCRETE
     ) = addMetric(key, value = if (value) 1.0 else 0.0, unit, aggregation)
+
+    fun addCountMetric(
+        key: String,
+        value: Double = 1.0,
+        aggregation: MetricAggregation = MetricAggregation.DISCRETE
+    ) = this.addMetric(key, value, unit = AbstractUnit.ONE, aggregation)
 
     fun <T> addTimedMetric(
         key: String,
