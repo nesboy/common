@@ -1,0 +1,14 @@
+Configuration:
+  status: WARN
+
+  appenders:
+    Console:
+      name: CONSOLE
+      PatternLayout:
+        Pattern: "[%level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c - %msg%n"
+
+  Loggers:
+    Root:
+      level: INFO
+      AppenderRef:
+        - ref: CONSOLE

@@ -2,7 +2,8 @@ rootProject.name = "common"
 
 include(
     "context",
-    "model"
+    "model",
+    "scope"
 )
 
 pluginManagement {
