@@ -1,4 +1,4 @@
-package dev.tcheng.common.scope
+package dev.tcheng.common.scope.manager
 
 import dev.tcheng.common.model.annotation.IgnoreCoverage
 import dev.tcheng.common.model.exception.InternalException
@@ -19,7 +19,7 @@ object MetricManager {
 
     fun <Q : Quantity<Q>> addMetric(
         key: String,
-        value: Double, // or Number?
+        value: Double = 1.0,
         unit: Unit<Q>,
         aggregation: MetricAggregation = MetricAggregation.DISCRETE
     ) {
@@ -40,8 +40,8 @@ object MetricManager {
             )
         } else if (existingMetric.unit != unit || existingMetric.aggregation != aggregation) {
             throw InternalException(
-                "Metric with key=$key is already present with a " +
-                    "different Unit=${existingMetric.unit} and/or Aggregation=${existingMetric.aggregation}"
+                "Metric with key=$key is already present in Scope with a " +
+                    "different unit=${existingMetric.unit} and/or aggregation=${existingMetric.aggregation}"
             )
         } else {
             existingMetric.datapoints.add(MetricDatapoint(value))
@@ -53,7 +53,7 @@ object MetricManager {
         value: Boolean,
         unit: Unit<Q>,
         aggregation: MetricAggregation = MetricAggregation.DISCRETE
-    ) = this.addMetric(key, value = if (value) 1.0 else 0.0, unit, aggregation)
+    ) = addMetric(key, value = if (value) 1.0 else 0.0, unit, aggregation)
 
     fun <T> addTimedMetric(
         key: String,
@@ -69,7 +69,7 @@ object MetricManager {
             val elapsedDuration = Duration.between(startTime, Instant.now())
             val normalizedElapsedDuration =
                 Quantities.getQuantity(elapsedDuration.toNanos(), MetricPrefix.NANO(Units.SECOND))
-            this.addMetric(key, value = normalizedElapsedDuration.to(unit).value.toDouble(), unit, aggregation)
+            addMetric(key, value = normalizedElapsedDuration.to(unit).value.toDouble(), unit, aggregation)
         }
     }
 

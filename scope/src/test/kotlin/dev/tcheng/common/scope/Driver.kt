@@ -1,26 +1,33 @@
 package dev.tcheng.common.scope
 
-import dev.tcheng.common.scope.MetadataManager.addMetadata
-import dev.tcheng.common.scope.MetricManager.addMetric
-import dev.tcheng.common.scope.ScopeManager.withScope
-import dev.tcheng.common.scope.model.MetadataTarget
+import dev.tcheng.common.scope.manager.MetadataManager.addMetadata
+import dev.tcheng.common.scope.manager.MetricManager.addMetric
+import dev.tcheng.common.scope.model.ContextConfig
+import dev.tcheng.common.scope.model.Option
+import dev.tcheng.common.scope.model.Target
 import org.apache.logging.log4j.ThreadContext
 import tech.units.indriya.AbstractUnit
 import tech.units.indriya.unit.Units
+import java.util.EnumSet
 import javax.measure.MetricPrefix
 
 fun main() {
-    withScope {
-        addMetadata(key = "requestId", value = "1234", targets = setOf(MetadataTarget.LOG))
-        addMetadata(key = "operation", value = "abc", targets = setOf(MetadataTarget.METRIC))
+    val interceptor = ScopeInterceptor(
+        contextConfig = ContextConfig(metadataTargets = mapOf("requestId" to setOf(Target.LOG, Target.METRIC))),
+        options = EnumSet.allOf(Option::class.java)
+    )
+
+    interceptor.intercept {
+        addMetadata(key = "requestId", value = "1234")
+        addMetadata(key = "operation", value = "abc")
         addMetric(key = "Order.Count", value = 5.0, unit = AbstractUnit.ONE)
         addMetric(key = "Order.Count", value = 8.0, unit = AbstractUnit.ONE)
         addMetric(key = "Some.Time", value = 5.0, unit = MetricPrefix.NANO(Units.SECOND))
 
         println("log4j context=${ThreadContext.getContext()}")
 
-        withScope(isChild = true) {
-            addMetadata(key = "subRequestId", value = "1234-A", targets = setOf(MetadataTarget.LOG))
+        interceptor.intercept(isChild = true) {
+            addMetadata(key = "subRequestId", value = "1234-A")
             addMetric(key = "Some.Time", value = 5.0, unit = MetricPrefix.NANO(Units.SECOND))
 
             println("log4j context=${ThreadContext.getContext()}")

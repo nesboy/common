@@ -1,4 +1,4 @@
-package dev.tcheng.common.scope
+package dev.tcheng.common.scope.manager
 
 import dev.tcheng.common.model.annotation.IgnoreCoverage
 import dev.tcheng.common.model.exception.InternalException

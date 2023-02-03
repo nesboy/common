@@ -11,7 +11,7 @@ data class Metric<Q : Quantity<Q>>(
 )
 
 data class MetricDatapoint(
-    val value: Double, // or Number?
+    val value: Double,
     val timestamp: Instant = Instant.now()
 )
 
