@@ -7,6 +7,7 @@ import dev.tcheng.common.scope.model.ContextConfig
 import dev.tcheng.common.scope.model.Option
 import dev.tcheng.common.scope.model.Target
 import org.apache.logging.log4j.ThreadContext
+import systems.uom.unicode.CLDR
 import tech.units.indriya.unit.Units
 import java.util.EnumSet
 import javax.measure.MetricPrefix
@@ -24,11 +25,15 @@ fun main() {
         addCountMetric(key = "Order.Count", value = 8.0)
         addMetric(key = "Test1", value = 5.0, unit = MetricPrefix.NANO(Units.SECOND))
 
+        Thread.sleep(1000)
+
         println("log4j context=${ThreadContext.getContext()}")
 
         interceptor.intercept(isChild = true) {
             addMetadata(key = "subRequestId", value = "1234-A")
-            addMetric(key = "Test2", value = 5.0, unit = MetricPrefix.NANO(Units.SECOND))
+            addMetric(key = "Test2", value = 5.0, unit = MetricPrefix.GIGA(CLDR.BYTE))
+
+            Thread.sleep(1000)
 
             println("log4j context=${ThreadContext.getContext()}")
         }

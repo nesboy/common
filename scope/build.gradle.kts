@@ -2,8 +2,8 @@ group = "dev.tcheng.common"
 version = "0.0.1"
 
 plugins {
-    id("common-conventions")
     `java-library`
+    id("common-conventions")
 }
 
 repositories {
@@ -15,11 +15,17 @@ dependencies {
     val log4jVersion: String by project
     val log4jKotlinVersion: String by project
     val junitVersion: String by project
+    val uomVersion:String by project
 
     implementation(project(":model"))
+//    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
+//    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+//    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
     implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
     implementation("org.apache.logging.log4j:log4j-api-kotlin:$log4jKotlinVersion")
-    implementation("tech.units:indriya:2.1.4")
+    implementation("systems.uom:systems-quantity:$uomVersion")
+    implementation("systems.uom:systems-unicode:$uomVersion")
+//    implementation("tech.uom.lib:uom-lib-jackson:$uomVersion")
 
     testCompileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
 

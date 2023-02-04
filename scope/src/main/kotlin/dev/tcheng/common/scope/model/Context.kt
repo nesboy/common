@@ -9,4 +9,8 @@ data class Context(
     val metadata: MutableMap<String, String> = mutableMapOf(),
     val startTimestamp: Instant = Instant.now(),
     val endTimestamp: Instant? = null
-)
+) {
+    override fun toString() =
+        "Context(config=$config, metrics=$metrics, metadata=$metadata, " +
+            "startTimestamp=$startTimestamp, endTimestamp=$endTimestamp)"
+}
