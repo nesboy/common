@@ -3,9 +3,7 @@ package dev.tcheng.common.scope
 import dev.tcheng.common.scope.manager.MetadataManager.addMetadata
 import dev.tcheng.common.scope.manager.MetricManager.addCountMetric
 import dev.tcheng.common.scope.manager.MetricManager.addMetric
-import dev.tcheng.common.scope.model.ContextConfig
 import dev.tcheng.common.scope.model.Option
-import dev.tcheng.common.scope.model.Target
 import org.apache.logging.log4j.ThreadContext
 import systems.uom.unicode.CLDR
 import tech.units.indriya.unit.Units
@@ -14,7 +12,6 @@ import javax.measure.MetricPrefix
 
 fun main() {
     val interceptor = ScopeInterceptor(
-        contextConfig = ContextConfig(metadataTargets = mapOf("requestId" to setOf(Target.LOG, Target.METRIC))),
         options = EnumSet.allOf(Option::class.java)
     )
 

@@ -3,7 +3,6 @@ package dev.tcheng.common.scope.model
 import java.time.Instant
 
 data class Context(
-    val config: ContextConfig,
     val metrics: MutableMap<String, Metric<*>> = mutableMapOf(),
     val objects: MutableMap<String, Any> = mutableMapOf(),
     val metadata: MutableMap<String, String> = mutableMapOf(),
@@ -11,6 +10,6 @@ data class Context(
     val endTimestamp: Instant? = null
 ) {
     override fun toString() =
-        "Context(config=$config, metrics=$metrics, metadata=$metadata, " +
+        "Context(metrics=$metrics, metadata=$metadata, " +
             "startTimestamp=$startTimestamp, endTimestamp=$endTimestamp)"
 }
