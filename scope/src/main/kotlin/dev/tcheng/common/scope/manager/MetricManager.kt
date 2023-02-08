@@ -3,7 +3,6 @@ package dev.tcheng.common.scope.manager
 import dev.tcheng.common.model.annotation.IgnoreCoverage
 import dev.tcheng.common.model.exception.InternalException
 import dev.tcheng.common.scope.model.Metric
-import dev.tcheng.common.scope.model.MetricAggregation
 import dev.tcheng.common.scope.model.MetricDatapoint
 import tech.units.indriya.AbstractUnit
 import tech.units.indriya.quantity.Quantities
@@ -22,7 +21,6 @@ object MetricManager {
         key: String,
         value: Double,
         unit: Unit<Q>,
-        aggregation: MetricAggregation = MetricAggregation.DISCRETE
     ) {
         val metrics = ContextStorageManager.peek().metrics
         val existingMetric = metrics[key]
@@ -36,13 +34,12 @@ object MetricManager {
         if (existingMetric == null) {
             metrics[key] = Metric(
                 datapoints = mutableListOf(MetricDatapoint(value)),
-                unit = unit,
-                aggregation = aggregation
+                unit = unit
             )
-        } else if (existingMetric.unit != unit || existingMetric.aggregation != aggregation) {
+        } else if (existingMetric.unit != unit) {
             throw InternalException(
                 "Metric with key=$key is already present in Scope with a " +
-                    "different unit=${existingMetric.unit} and/or aggregation=${existingMetric.aggregation}"
+                    "different unit=${existingMetric.unit}"
             )
         } else {
             existingMetric.datapoints.add(MetricDatapoint(value))
@@ -53,19 +50,16 @@ object MetricManager {
         key: String,
         value: Boolean,
         unit: Unit<Q>,
-        aggregation: MetricAggregation = MetricAggregation.DISCRETE
-    ) = addMetric(key, value = if (value) 1.0 else 0.0, unit, aggregation)
+    ) = this.addMetric(key, value = if (value) 1.0 else 0.0, unit)
 
     fun addCountMetric(
         key: String,
         value: Double = 1.0,
-        aggregation: MetricAggregation = MetricAggregation.DISCRETE
-    ) = this.addMetric(key, value, unit = AbstractUnit.ONE, aggregation)
+    ) = this.addMetric(key, value, unit = AbstractUnit.ONE)
 
     fun <T> addTimedMetric(
         key: String,
         unit: Unit<Time> = MetricPrefix.MILLI(Units.SECOND),
-        aggregation: MetricAggregation = MetricAggregation.DISCRETE,
         operation: () -> T?
     ): T? {
         val startTime = Instant.now()
@@ -76,7 +70,7 @@ object MetricManager {
             val elapsedDuration = Duration.between(startTime, Instant.now())
             val normalizedElapsedDuration =
                 Quantities.getQuantity(elapsedDuration.toNanos(), MetricPrefix.NANO(Units.SECOND))
-            addMetric(key, value = normalizedElapsedDuration.to(unit).value.toDouble(), unit, aggregation)
+            this.addMetric(key, value = normalizedElapsedDuration.to(unit).value.toDouble(), unit)
         }
     }
 
