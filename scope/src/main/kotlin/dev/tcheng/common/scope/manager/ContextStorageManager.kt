@@ -19,10 +19,11 @@ object ContextStorageManager {
         ?.removeLast()
         ?: throw InternalException("No Context available")
 
-    fun peek() = stacks.get()
+    fun peek() = this.peekOrNull() ?: throw InternalException("No Context available")
+
+    fun peekOrNull() = stacks.get()
         .takeIf { it.isNotEmpty() }
         ?.last
-        ?: throw InternalException("No Context available")
 
     fun clear() = stacks.get().clear()
 }

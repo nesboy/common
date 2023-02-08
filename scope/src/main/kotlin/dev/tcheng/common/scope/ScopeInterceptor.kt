@@ -13,12 +13,8 @@ class ScopeInterceptor(
     private val contextProcessors: List<ContextProcessor> = emptyList()
 ) : Logging {
 
-    fun <T> intercept(
-        isChild: Boolean = false,
-        optionOverrides: Set<Option>? = null,
-        operation: () -> T?
-    ): T? {
-        ScopeManager.startScope(isChild)
+    fun <T> intercept(optionOverrides: Set<Option>? = null, operation: () -> T?): T? {
+        ScopeManager.startScope()
         val options = optionOverrides ?: options
 
         val result = runCatching {

@@ -2,7 +2,6 @@ package dev.tcheng.common.scope.manager
 
 import dev.tcheng.common.model.annotation.IgnoreCoverage
 import dev.tcheng.common.model.exception.InternalException
-import dev.tcheng.common.scope.model.Context
 import org.apache.logging.log4j.ThreadContext
 
 @IgnoreCoverage
@@ -11,14 +10,23 @@ object MetadataManager {
     fun addMetadata(key: String, value: String) {
         val context = ContextStorageManager.peek()
         val metadata = context.metadata
+        val loggerMetadataKeys = context.loggerMetadataKeys
 
         if (metadata.containsKey(key)) {
-            throw InternalException("Scope already contains Metadata with key=$key")
-        } else if (ThreadContext.containsKey(key)) {
-            throw InternalException("Logger already contains Metadata with key=$key")
+            if (metadata[key] != value) {
+                throw InternalException("Scope already contains Metadata with key=$key and a different value")
+            }
         } else {
             metadata[key] = value
+        }
+
+        if (ThreadContext.containsKey(key)) {
+            if (ThreadContext.get(key) != value) {
+                throw InternalException("Logger already contains Metadata with key=$key and a different value")
+            }
+        } else {
             ThreadContext.put(key, value)
+            loggerMetadataKeys.add(key)
         }
     }
 
@@ -29,5 +37,6 @@ object MetadataManager {
 
     fun getAllMetadata() = ContextStorageManager.peek().metadata
 
-    internal fun removeMetadataFromLogger(scopeContext: Context) = ThreadContext.removeAll(scopeContext.metadata.keys)
+    internal fun removeMetadataFromLogger(metadataKeys: Set<String>) =
+        ThreadContext.removeAll(metadataKeys)
 }

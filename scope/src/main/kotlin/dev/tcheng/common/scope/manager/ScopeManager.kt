@@ -7,16 +7,15 @@ import java.time.Instant
 @IgnoreCoverage
 object ScopeManager {
 
-    fun startScope(isChild: Boolean = false) {
-        if (isChild) {
-            ContextStorageManager.peek().let {
-                ContextStorageManager.push(Context(metadata = it.metadata.toMutableMap()))
-            }
-        } else {
-            ContextStorageManager.push(Context())
+    fun startScope() {
+        val previousContext = ContextStorageManager.peekOrNull()
+        ContextStorageManager.push(Context())
+
+        previousContext?.metadata?.forEach {
+            MetadataManager.addMetadata(it.key, it.value)
         }
     }
 
     fun endScope() = ContextStorageManager.pop().copy(endTimestamp = Instant.now())
-        .also { MetadataManager.removeMetadataFromLogger(it) }
+        .also { MetadataManager.removeMetadataFromLogger(metadataKeys = it.loggerMetadataKeys) }
 }

@@ -4,8 +4,11 @@ Configuration:
   appenders:
     Console:
       name: CONSOLE
-      PatternLayout:
-        Pattern: "[%level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c - %msg%n"
+      JsonLayout:
+        compact: true
+        eventEol: true
+        properties: true
+        includeTimeMillis: true
 
   Loggers:
     Root:
