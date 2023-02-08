@@ -10,7 +10,7 @@ object ScopeManager {
     fun startScope(isChild: Boolean = false) {
         if (isChild) {
             ContextStorageManager.peek().let {
-                ContextStorageManager.push(Context(metadata = it.metadata))
+                ContextStorageManager.push(Context(metadata = it.metadata.toMutableMap()))
             }
         } else {
             ContextStorageManager.push(Context())
