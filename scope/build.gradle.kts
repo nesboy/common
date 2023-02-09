@@ -32,4 +32,10 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+
+    integTestImplementation(project(":model"))
+    integTestImplementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
+    integTestImplementation("org.apache.logging.log4j:log4j-api-kotlin:$log4jKotlinVersion")
+    integTestImplementation("systems.uom:systems-quantity:$uomVersion")
+    integTestImplementation("systems.uom:systems-unicode:$uomVersion")
 }

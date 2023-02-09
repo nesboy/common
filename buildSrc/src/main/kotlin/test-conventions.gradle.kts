@@ -1,3 +1,4 @@
+import org.gradle.api.attributes.TestSuiteType
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
@@ -29,6 +30,8 @@ testing {
         val test by getting(JvmTestSuite::class)
 
         val integTest by registering(JvmTestSuite::class) {
+            testType.set(TestSuiteType.INTEGRATION_TEST)
+
             dependencies {
                 implementation(project())
             }

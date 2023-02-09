@@ -3,6 +3,7 @@ package dev.tcheng.common.scope
 import dev.tcheng.common.scope.manager.MetadataManager.addMetadata
 import dev.tcheng.common.scope.manager.MetricManager.addCountMetric
 import dev.tcheng.common.scope.manager.MetricManager.addMetric
+import dev.tcheng.common.scope.model.Option
 import dev.tcheng.common.scope.multithread.ScopeAwareExecutorService
 import org.apache.logging.log4j.kotlin.Logging
 import systems.uom.unicode.CLDR
@@ -15,7 +16,7 @@ object Driver : Logging {
     @JvmStatic
     fun main(args: Array<String>) {
         val interceptor = ScopeInterceptor(
-            options = setOf()
+            options = setOf(Option.CONTEXT_LOG)
         )
 
         val threadPool = ScopeAwareExecutorService(
