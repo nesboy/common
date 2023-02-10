@@ -27,15 +27,15 @@ dependencies {
     implementation("systems.uom:systems-unicode:$uomVersion")
 //    implementation("tech.uom.lib:uom-lib-jackson:$uomVersion")
 
-    testCompileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
+    integTestCompileOnly(project(":logging"))
+    integTestCompileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
 
-    testImplementation(kotlin("test"))
-    testImplementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-
+    integTestImplementation(kotlin("test"))
     integTestImplementation(project(":model"))
     integTestImplementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
     integTestImplementation("org.apache.logging.log4j:log4j-api-kotlin:$log4jKotlinVersion")
+    integTestImplementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
+    integTestImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
     integTestImplementation("systems.uom:systems-quantity:$uomVersion")
     integTestImplementation("systems.uom:systems-unicode:$uomVersion")
 }

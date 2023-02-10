@@ -1,17 +1,15 @@
 Configuration:
-  status: WARN
+  Status: WARN
+  Packages: dev.tcheng.common.logging.layout
 
-  appenders:
+  Appenders:
     Console:
-      name: CONSOLE
-      JsonLayout:
-        compact: true
-        eventEol: true
-        properties: true
-        includeTimeMillis: true
+      Name: CONSOLE
+      SimpleLayout:
+        mode: JSON
 
   Loggers:
     Root:
-      level: DEBUG
+      Level: DEBUG
       AppenderRef:
         - ref: CONSOLE
