@@ -15,7 +15,7 @@ class ScopeAwareExecutorService(
         delegate.execute(
             ScopeAwareRunnable(
                 scopeInterceptor,
-                metadata = MetadataManager.getAllMetadata().toMap(),
+                parentMetadata = MetadataManager.getAllMetadata().toMap(),
                 command
             )
         )

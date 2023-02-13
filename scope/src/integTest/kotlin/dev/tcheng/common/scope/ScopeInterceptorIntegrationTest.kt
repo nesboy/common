@@ -75,20 +75,15 @@ class ScopeInterceptorIntegrationTest {
         fun `WHEN adding distinct metadata within Scope THEN metadata should be present`() {
             // prepare
             val interceptor = ScopeInterceptor()
+            val expectedMetadata = mapOf(
+                "TestKey1" to "TestValue1",
+                "TestKey2" to "TestValue2"
+            )
 
-            interceptor.intercept {
-                // execute
-                MetadataManager.apply {
-                    addMetadata(key = "TestKey1", value = "TestValue1")
-                    addMetadata(key = "TestKey2", value = "TestValue2")
-                }
-
+            // execute
+            interceptor.intercept(initialMetadata = expectedMetadata) {
                 // verify
                 val actualMetadata = MetadataManager.getAllMetadata()
-                val expectedMetadata = mapOf(
-                    "TestKey1" to "TestValue1",
-                    "TestKey2" to "TestValue2"
-                )
 
                 assertAll(
                     { assertEquals(expectedMetadata, actualMetadata) },

@@ -1,6 +1,7 @@
 package dev.tcheng.common.scope
 
 import dev.tcheng.common.model.annotation.IgnoreCoverage
+import dev.tcheng.common.scope.manager.MetadataManager
 import dev.tcheng.common.scope.manager.MetricManager
 import dev.tcheng.common.scope.manager.ScopeManager
 import dev.tcheng.common.scope.model.Option
@@ -13,8 +14,13 @@ class ScopeInterceptor(
     private val contextProcessors: List<ContextProcessor> = emptyList()
 ) : Logging {
 
-    fun <T> intercept(optionOverrides: Set<Option>? = null, operation: () -> T?): T? {
+    fun <T> intercept(
+        initialMetadata: Map<String, String> = emptyMap(),
+        optionOverrides: Set<Option>? = null,
+        operation: () -> T?
+    ): T? {
         ScopeManager.startScope()
+        MetadataManager.addAllMetadata(initialMetadata)
         val options = optionOverrides ?: options
 
         val result = runCatching {

@@ -30,6 +30,10 @@ object MetadataManager {
         }
     }
 
+    fun addAllMetadata(entries: Map<String, String>) {
+        entries.forEach { this.addMetadata(it.key, it.value) }
+    }
+
     fun getMetadataOrNull(key: String): String? = ContextStorageManager.peek().metadata[key]
 
     fun getMetadata(key: String) = getMetadataOrNull(key)
