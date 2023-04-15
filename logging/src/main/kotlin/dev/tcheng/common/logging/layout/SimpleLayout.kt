@@ -74,6 +74,7 @@ class SimpleLayout(private val mode: SimpleLayoutMode) : AbstractStringLayout(Ch
             append("}")
         }
 
+    @Suppress("UNCHECKED_CAST")
     private fun createEntry(key: String, value: Any): String {
         val formattedValue = when (value) {
             is List<*> -> createJsonPayload(value as List<Map<String, Any>>)
