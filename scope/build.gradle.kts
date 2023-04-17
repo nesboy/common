@@ -27,6 +27,10 @@ dependencies {
     implementation("systems.uom:systems-unicode:$uomVersion")
 //    implementation("tech.uom.lib:uom-lib-jackson:$uomVersion")
 
+    testImplementation(kotlin("test"))
+    testImplementation(project(":model"))
+    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+
     integTestCompileOnly(project(":logging"))
     integTestCompileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
 
