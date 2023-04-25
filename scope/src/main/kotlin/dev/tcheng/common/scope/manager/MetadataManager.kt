@@ -1,10 +1,8 @@
 package dev.tcheng.common.scope.manager
 
-import dev.tcheng.common.model.annotation.IgnoreCoverage
 import dev.tcheng.common.model.exception.InternalException
 import org.apache.logging.log4j.ThreadContext
 
-@IgnoreCoverage
 object MetadataManager {
 
     fun addMetadata(key: String, value: String) {
@@ -36,11 +34,10 @@ object MetadataManager {
 
     fun getMetadataOrNull(key: String): String? = ContextStorageManager.peek().metadata[key]
 
-    fun getMetadata(key: String) = getMetadataOrNull(key)
+    fun getMetadata(key: String) = this.getMetadataOrNull(key)
         ?: throw InternalException("Scope does not contain Metadata with key=$key")
 
     fun getAllMetadata() = ContextStorageManager.peek().metadata
 
-    internal fun removeMetadataFromLogger(metadataKeys: Set<String>) =
-        ThreadContext.removeAll(metadataKeys)
+    internal fun removeMetadataFromLogger(metadataKeys: Set<String>) = ThreadContext.removeAll(metadataKeys)
 }

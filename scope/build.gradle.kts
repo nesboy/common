@@ -11,10 +11,12 @@ repositories {
 }
 
 dependencies {
+    val easyRandomVersion: String by project
     val jacksonVersion: String by project
+    val junitVersion: String by project
     val log4jVersion: String by project
     val log4jKotlinVersion: String by project
-    val junitVersion: String by project
+    val mockkVersion: String by project
     val uomVersion:String by project
 
     implementation(project(":model"))
@@ -29,6 +31,8 @@ dependencies {
 
     testImplementation(kotlin("test"))
     testImplementation(project(":model"))
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("org.jeasy:easy-random-core:$easyRandomVersion")
     testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
 
     integTestCompileOnly(project(":logging"))
