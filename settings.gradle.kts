@@ -1,6 +1,7 @@
 rootProject.name = "common"
 
 include(
+    "easy-random",
     "logging",
     "model",
     "scope"

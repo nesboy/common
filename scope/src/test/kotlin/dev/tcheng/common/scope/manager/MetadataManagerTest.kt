@@ -1,5 +1,6 @@
 package dev.tcheng.common.scope.manager
 
+import dev.tcheng.common.easyRandom.nextString
 import dev.tcheng.common.model.exception.InternalException
 import dev.tcheng.common.scope.model.Context
 import io.mockk.every
@@ -272,7 +273,4 @@ class MetadataManagerTest {
             verify { ThreadContext.removeAll(keys) }
         }
     }
-
-    // move to common package
-    fun EasyRandom.nextString(): String = this.nextObject(String::class.java)
 }

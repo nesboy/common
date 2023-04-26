@@ -30,6 +30,7 @@ dependencies {
 //    implementation("tech.uom.lib:uom-lib-jackson:$uomVersion")
 
     testImplementation(kotlin("test"))
+    testImplementation(project(":easy-random"))
     testImplementation(project(":model"))
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("org.jeasy:easy-random-core:$easyRandomVersion")
