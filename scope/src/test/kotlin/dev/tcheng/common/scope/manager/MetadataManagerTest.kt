@@ -28,12 +28,17 @@ class MetadataManagerTest {
     @BeforeEach
     fun setUp() {
         random = EasyRandom()
-        mockkObject(ContextStorageManager)
-        mockkStatic(ThreadContext::class)
     }
 
     @Nested
     inner class AddMetadata {
+
+        @BeforeEach
+        fun setUp() {
+            mockkObject(ContextStorageManager)
+            mockkStatic(ThreadContext::class)
+        }
+
         @Test
         fun `WHEN metadata is new THEN add to scope and logger metadata`() {
             // prepare
@@ -163,6 +168,11 @@ class MetadataManagerTest {
     @Nested
     inner class GetMetadataOrNull {
 
+        @BeforeEach
+        fun setUp() {
+            mockkObject(ContextStorageManager)
+        }
+
         @Test
         fun `WHEN key is present THEN return value`() {
             // prepare
@@ -246,6 +256,7 @@ class MetadataManagerTest {
             val expectedMetadata = mutableMapOf(random.nextString() to random.nextString())
             val context = Context(metadata = expectedMetadata)
 
+            mockkObject(ContextStorageManager)
             every { ContextStorageManager.peek() } returns context
 
             // execute
@@ -264,6 +275,7 @@ class MetadataManagerTest {
             // prepare
             val keys = random.objects(String::class.java, 5).toList().toSet()
 
+            mockkStatic(ThreadContext::class)
             justRun { ThreadContext.removeAll(keys) }
 
             // execute
