@@ -1,6 +1,5 @@
 package dev.tcheng.common.scope.manager
 
-import dev.tcheng.common.model.annotation.IgnoreCoverage
 import dev.tcheng.common.model.exception.InternalException
 import dev.tcheng.common.scope.model.Metric
 import dev.tcheng.common.scope.model.MetricDatapoint
@@ -10,18 +9,12 @@ import tech.units.indriya.unit.Units
 import java.time.Duration
 import java.time.Instant
 import javax.measure.MetricPrefix
-import javax.measure.Quantity
 import javax.measure.Unit
 import javax.measure.quantity.Time
 
-@IgnoreCoverage
 object MetricManager {
 
-    fun <Q : Quantity<Q>> addMetric(
-        key: String,
-        value: Double,
-        unit: Unit<Q>,
-    ) {
+    fun addMetric(key: String, value: Double, unit: Unit<*>) {
         val metrics = ContextStorageManager.peek().metrics
         val existingMetric = metrics[key]
 
@@ -46,16 +39,11 @@ object MetricManager {
         }
     }
 
-    fun <Q : Quantity<Q>> addMetric(
-        key: String,
-        value: Boolean,
-        unit: Unit<Q>,
-    ) = this.addMetric(key, value = if (value) 1.0 else 0.0, unit)
+    fun addMetric(key: String, value: Boolean, unit: Unit<*>) =
+        this.addMetric(key, value = if (value) 1.0 else 0.0, unit)
 
-    fun addCountMetric(
-        key: String,
-        value: Double = 1.0,
-    ) = this.addMetric(key, value, unit = AbstractUnit.ONE)
+    fun addCountMetric(key: String, value: Double = 1.0) =
+        this.addMetric(key, value, unit = AbstractUnit.ONE)
 
     fun <T> addTimedMetric(
         key: String,
