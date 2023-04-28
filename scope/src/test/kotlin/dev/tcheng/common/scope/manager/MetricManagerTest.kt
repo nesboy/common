@@ -86,7 +86,7 @@ class MetricManagerTest {
 
             val context = Context(
                 metrics = mutableMapOf(
-                    key to random.nextObject(Metric::class)
+                    key to random.nextObject<Metric>()
                 )
             )
             every { ContextStorageManager.peek() } returns context
@@ -102,7 +102,7 @@ class MetricManagerTest {
             val value = random.nextDouble()
 
             val existingMetrics = mutableMapOf(
-                key to random.nextObject(Metric::class)
+                key to random.nextObject<Metric>()
             )
             val context = Context(
                 metrics = existingMetrics.toMutableMap() // create copy
@@ -281,7 +281,7 @@ class MetricManagerTest {
         @Test
         fun `WHEN called THEN return all recorded metrics`() {
             // prepare
-            val context = random.nextObject(Context::class)
+            val context = random.nextObject<Context>()
 
             mockkObject(ContextStorageManager)
             every { ContextStorageManager.peek() } returns context

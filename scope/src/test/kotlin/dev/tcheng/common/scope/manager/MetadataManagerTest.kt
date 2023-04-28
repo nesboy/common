@@ -12,11 +12,11 @@ import io.mockk.verify
 import io.mockk.verifyAll
 import org.apache.logging.log4j.ThreadContext
 import org.jeasy.random.EasyRandom
-import org.junit.jupiter.api.Assertions.assertAll
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.assertThrows
 import kotlin.streams.toList
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -73,7 +73,7 @@ class MetadataManagerTest {
             every { ContextStorageManager.peek() } returns context
 
             // execute and verify
-            assertThrows(InternalException::class.java) { MetadataManager.addMetadata(key, value) }
+            assertThrows<InternalException> { MetadataManager.addMetadata(key, value) }
         }
 
         @Test
@@ -110,7 +110,7 @@ class MetadataManagerTest {
             every { ThreadContext.get(key) } returns random.nextString()
 
             // execute and verify
-            assertThrows(InternalException::class.java) { MetadataManager.addMetadata(key, value) }
+            assertThrows<InternalException> { MetadataManager.addMetadata(key, value) }
         }
 
         @Test
@@ -243,7 +243,7 @@ class MetadataManagerTest {
             every { underTest.getMetadataOrNull(key) } returns null
 
             // execute and verify
-            assertThrows(InternalException::class.java) { underTest.getMetadata(key) }
+            assertThrows<InternalException> { underTest.getMetadata(key) }
         }
     }
 

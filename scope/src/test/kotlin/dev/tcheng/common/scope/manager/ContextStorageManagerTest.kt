@@ -2,9 +2,9 @@ package dev.tcheng.common.scope.manager
 
 import dev.tcheng.common.model.exception.InternalException
 import dev.tcheng.common.scope.model.Context
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
@@ -30,7 +30,7 @@ class ContextStorageManagerTest {
     @Test
     fun `WHEN no context is pushed THEN InternalException should be thrown on pop`() {
         // execute and verify
-        assertThrows(InternalException::class.java) { ContextStorageManager.pop() }
+        assertThrows<InternalException> { ContextStorageManager.pop() }
     }
 
     @Test

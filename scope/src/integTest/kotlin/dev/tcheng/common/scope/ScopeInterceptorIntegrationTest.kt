@@ -6,22 +6,22 @@ import dev.tcheng.common.scope.manager.MetadataManager
 import dev.tcheng.common.scope.manager.MetricManager
 import dev.tcheng.common.scope.manager.ObjectManager
 import org.apache.logging.log4j.ThreadContext
-import org.junit.jupiter.api.Assertions.assertAll
-import org.junit.jupiter.api.Assertions.assertDoesNotThrow
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertNull
-import org.junit.jupiter.api.Assertions.assertThrows
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
+import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.assertThrows
 import systems.uom.unicode.CLDR
 import tech.units.indriya.AbstractUnit
 import tech.units.indriya.unit.Units
 import java.time.DayOfWeek
 import javax.measure.MetricPrefix
+import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class ScopeInterceptorIntegrationTest {
 
@@ -64,7 +64,7 @@ class ScopeInterceptorIntegrationTest {
             }
 
             // verify
-            assertThrows(InternalException::class.java) { ContextStorageManager.peek() }
+            assertThrows<InternalException> { ContextStorageManager.peek() }
         }
     }
 
@@ -86,8 +86,8 @@ class ScopeInterceptorIntegrationTest {
                 val actualMetadata = MetadataManager.getAllMetadata()
 
                 assertAll(
-                    { assertEquals(expectedMetadata, actualMetadata) },
-                    { assertEquals(expectedMetadata, ThreadContext.getContext()) }
+                    { assertEquals(expected = expectedMetadata, actual = actualMetadata) },
+                    { assertEquals(expected = expectedMetadata, actual = ThreadContext.getContext()) }
                 )
             }
         }
@@ -137,7 +137,7 @@ class ScopeInterceptorIntegrationTest {
                     addMetadata(key = "TestKey", value = "TestValue1")
 
                     // verify
-                    assertThrows(InternalException::class.java) { addMetadata(key = "TestKey", value = "TestValue2") }
+                    assertThrows<InternalException> { addMetadata(key = "TestKey", value = "TestValue2") }
                 }
             }
         }
@@ -168,28 +168,28 @@ class ScopeInterceptorIntegrationTest {
                 val testMetric = actualMetrics["TestMetric"]
                 assertNotNull(testMetric)
                 assertAll(
-                    { assertEquals(MetricPrefix.GIGA(CLDR.BYTE), testMetric!!.unit) },
-                    { assertEquals(1, testMetric!!.datapoints.size) },
-                    { assertEquals(2.0, testMetric!!.datapoints[0].value) },
-                    { assertNotNull(testMetric!!.datapoints[0].timestamp) }
+                    { assertEquals(MetricPrefix.GIGA(CLDR.BYTE), testMetric.unit) },
+                    { assertEquals(1, testMetric.datapoints.size) },
+                    { assertEquals(2.0, testMetric.datapoints[0].value) },
+                    { assertNotNull(testMetric.datapoints[0].timestamp) }
                 )
 
                 val testCountMetric = actualMetrics["TestCountMetric"]
                 assertNotNull(testCountMetric)
                 assertAll(
-                    { assertEquals(AbstractUnit.ONE, testCountMetric!!.unit) },
-                    { assertEquals(1, testCountMetric!!.datapoints.size) },
-                    { assertEquals(3.0, testCountMetric!!.datapoints[0].value) },
-                    { assertNotNull(testCountMetric!!.datapoints[0].timestamp) }
+                    { assertEquals(AbstractUnit.ONE, testCountMetric.unit) },
+                    { assertEquals(1, testCountMetric.datapoints.size) },
+                    { assertEquals(3.0, testCountMetric.datapoints[0].value) },
+                    { assertNotNull(testCountMetric.datapoints[0].timestamp) }
                 )
 
                 val testTimeMetric = actualMetrics["TestTimeMetric"]
                 assertNotNull(testTimeMetric)
                 assertAll(
-                    { assertEquals(Units.SECOND, testTimeMetric!!.unit) },
-                    { assertEquals(1, testTimeMetric!!.datapoints.size) },
-                    { assertNotNull(testTimeMetric!!.datapoints[0].value) },
-                    { assertNotNull(testTimeMetric!!.datapoints[0].timestamp) }
+                    { assertEquals(Units.SECOND, testTimeMetric.unit) },
+                    { assertEquals(1, testTimeMetric.datapoints.size) },
+                    { assertNotNull(testTimeMetric.datapoints[0].value) },
+                    { assertNotNull(testTimeMetric.datapoints[0].timestamp) }
                 )
             }
         }
@@ -213,12 +213,12 @@ class ScopeInterceptorIntegrationTest {
                 val testMetric = actualMetrics["TestMetric"]
                 assertNotNull(testMetric)
                 assertAll(
-                    { assertEquals(AbstractUnit.ONE, testMetric!!.unit) },
-                    { assertEquals(2, testMetric!!.datapoints.size) },
-                    { assertEquals(8.0, testMetric!!.datapoints[0].value) },
-                    { assertNotNull(testMetric!!.datapoints[0].timestamp) },
-                    { assertEquals(3.0, testMetric!!.datapoints[1].value) },
-                    { assertNotNull(testMetric!!.datapoints[1].timestamp) }
+                    { assertEquals(AbstractUnit.ONE, testMetric.unit) },
+                    { assertEquals(2, testMetric.datapoints.size) },
+                    { assertEquals(8.0, testMetric.datapoints[0].value) },
+                    { assertNotNull(testMetric.datapoints[0].timestamp) },
+                    { assertEquals(3.0, testMetric.datapoints[1].value) },
+                    { assertNotNull(testMetric.datapoints[1].timestamp) }
                 )
             }
         }
@@ -279,7 +279,7 @@ class ScopeInterceptorIntegrationTest {
                     addObject(key = "TestObject", instance = DayOfWeek.MONDAY)
 
                     // verify
-                    assertThrows(InternalException::class.java) {
+                    assertThrows<InternalException> {
                         addObject(key = "TestObject", instance = DayOfWeek.TUESDAY)
                     }
                 }
