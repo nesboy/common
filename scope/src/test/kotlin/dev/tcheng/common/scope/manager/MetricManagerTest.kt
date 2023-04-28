@@ -6,6 +6,7 @@ import dev.tcheng.common.model.exception.InternalException
 import dev.tcheng.common.scope.model.Context
 import dev.tcheng.common.scope.model.Metric
 import dev.tcheng.common.scope.model.MetricDatapoint
+import dev.tcheng.common.scope.random.EasyRandomParameterFactory
 import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
@@ -13,7 +14,6 @@ import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.verify
 import org.jeasy.random.EasyRandom
-import org.jeasy.random.EasyRandomParameters
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -38,9 +38,7 @@ class MetricManagerTest {
 
     @BeforeEach
     fun setUp() {
-        val randomParameters = EasyRandomParameters()
-            .collectionSizeRange(2, 3)
-            .overrideDefaultInitialization(true)
+        val randomParameters = EasyRandomParameterFactory.createDefault()
             .randomize(Unit::class.java) { DEFAULT_UNIT }
         random = EasyRandom(randomParameters)
     }

@@ -1,9 +1,7 @@
 package dev.tcheng.common.scope.manager
 
-import dev.tcheng.common.model.annotation.IgnoreCoverage
 import dev.tcheng.common.model.exception.InternalException
 
-@IgnoreCoverage
 object ObjectManager {
 
     fun addObject(key: String, instance: Any) {
@@ -18,7 +16,7 @@ object ObjectManager {
         }
     }
 
-    inline fun <reified T> getObjectOrNull(key: String): T? = getObjectOrNull(key, instanceType = T::class.java)
+    inline fun <reified T> getObjectOrNull(key: String): T? = this.getObjectOrNull(key, instanceType = T::class.java)
 
     fun <T> getObjectOrNull(key: String, instanceType: Class<T>): T? {
         val instances = ContextStorageManager.peek().objects
@@ -36,9 +34,9 @@ object ObjectManager {
         }
     }
 
-    inline fun <reified T> getObject(key: String) = getObject(key, T::class.java)
+    inline fun <reified T> getObject(key: String) = this.getObject(key, T::class.java)
 
-    fun <T> getObject(key: String, instanceType: Class<T>) = getObjectOrNull(key, instanceType)
+    fun <T> getObject(key: String, instanceType: Class<T>) = this.getObjectOrNull(key, instanceType)
         ?: throw InternalException("Scope does not contain Object with key=$key")
 
     fun getAllObjects() = ContextStorageManager.peek().objects
