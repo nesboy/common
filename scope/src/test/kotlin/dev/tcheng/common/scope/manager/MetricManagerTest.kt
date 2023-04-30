@@ -8,6 +8,7 @@ import dev.tcheng.common.scope.model.Metric
 import dev.tcheng.common.scope.model.MetricDatapoint
 import dev.tcheng.common.scope.random.EasyRandomParameterFactory
 import io.mockk.every
+import io.mockk.junit5.MockKExtension
 import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.mockkObject
@@ -19,6 +20,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.extension.ExtendWith
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments.arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -33,6 +35,7 @@ import javax.measure.quantity.Dimensionless
 import javax.measure.quantity.Time
 import kotlin.test.assertEquals
 
+@ExtendWith(MockKExtension::class)
 class MetricManagerTest {
     private lateinit var random: EasyRandom
 
