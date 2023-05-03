@@ -11,15 +11,13 @@ class ScopeAwareExecutorService(
     private val scopeInterceptor: ScopeInterceptor
 ) : AbstractExecutorService() {
 
-    override fun execute(command: Runnable) {
-        delegate.execute(
-            ScopeAwareRunnable(
-                scopeInterceptor,
-                parentMetadata = MetadataManager.getAllMetadata().toMap(),
-                command
-            )
+    override fun execute(command: Runnable) = delegate.execute(
+        ScopeAwareRunnable(
+            scopeInterceptor,
+            parentMetadata = MetadataManager.getAllMetadata().toMap(),
+            command
         )
-    }
+    )
 
     override fun shutdown() = delegate.shutdown()
     override fun shutdownNow(): MutableList<Runnable> = delegate.shutdownNow()
