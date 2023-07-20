@@ -1,56 +1,51 @@
-import kotlinx.kover.api.CounterType
-import kotlinx.kover.api.VerificationTarget
-import kotlinx.kover.api.VerificationValueType
+import kotlinx.kover.gradle.plugin.dsl.AggregationType
+import kotlinx.kover.gradle.plugin.dsl.GroupingEntityType
+import kotlinx.kover.gradle.plugin.dsl.MetricType
 
 plugins {
     id("org.jetbrains.kotlinx.kover")
 }
 
-kover {
-    isDisabled.set(false)
-
-    filters {
-        classes {
-            excludes += listOf("**.model.**")
-        }
-
-        annotations {
-            excludes += listOf("IgnoreCoverage")
-        }
-    }
-
-    xmlReport {
-        onCheck.set(false)
-    }
-
-    htmlReport {
-        onCheck.set(true)
-    }
-
-    verify {
-        onCheck.set(true)
-
-        rule {
-            name = "LineCoverage"
-            isEnabled = false
-            target = VerificationTarget.CLASS
-
-            bound {
-                minValue = 90
-                counter = CounterType.LINE
-                valueType = VerificationValueType.COVERED_PERCENTAGE
+koverReport {
+    defaults {
+        filters {
+            excludes {
+                classes("**.model.**")
+                annotatedBy("IgnoreCoverage")
             }
         }
 
-        rule {
-            name = "BranchCoverage"
-            isEnabled = false
-            target = VerificationTarget.CLASS
+        xml {
+            onCheck = false
+        }
 
-            bound {
-                minValue = 80
-                counter = CounterType.BRANCH
-                valueType = VerificationValueType.COVERED_PERCENTAGE
+        html {
+            onCheck = true
+        }
+
+        verify {
+            onCheck = true
+
+            rule("LineCoverage") {
+                isEnabled = false
+                entity = GroupingEntityType.CLASS
+
+                bound {
+                    minValue = 90
+                    metric = MetricType.LINE
+                    aggregation = AggregationType.COVERED_PERCENTAGE
+                }
+            }
+
+            rule("BranchCoverage") {
+                isEnabled = false
+                entity = GroupingEntityType.CLASS
+
+                bound {
+                    minValue = 80
+                    metric = MetricType.BRANCH
+                    aggregation = AggregationType.COVERED_PERCENTAGE
+                }
             }
         }
     }

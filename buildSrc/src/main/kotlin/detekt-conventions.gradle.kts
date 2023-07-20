@@ -6,11 +6,11 @@ plugins {
 }
 
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.0")
 }
 
 detekt {
-    config = files("${rootDir}/buildSrc/src/main/resources/detekt-config.yml")
+    config.setFrom("${rootDir}/buildSrc/src/main/resources/detekt-config.yml")
     parallel = true
     ignoreFailures = false
     autoCorrect = true
