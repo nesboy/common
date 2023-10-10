@@ -2,11 +2,12 @@ group = "dev.tcheng.common"
 version = "0.0.1"
 
 plugins {
+    id("dev.tcheng.conventions-kotlin.common") version "0.0.1"
     `java-library`
-    id("common-conventions")
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
@@ -18,6 +19,8 @@ dependencies {
     val log4jKotlinVersion: String by project
     val mockkVersion: String by project
     val uomVersion:String by project
+
+    compileOnly("dev.tcheng.conventions-kotlin:plugin:0.0.1")
 
     implementation(project(":model"))
 //    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")

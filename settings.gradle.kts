@@ -8,4 +8,8 @@ include(
 )
 
 pluginManagement {
+    repositories {
+        mavenLocal()
+        gradlePluginPortal()
+    }
 }
