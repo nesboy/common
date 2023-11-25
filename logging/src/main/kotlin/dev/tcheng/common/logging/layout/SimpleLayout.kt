@@ -1,6 +1,7 @@
 package dev.tcheng.common.logging.layout
 
 import dev.tcheng.common.logging.model.SimpleLayoutMode
+import org.apache.commons.text.StringEscapeUtils
 import org.apache.logging.log4j.core.Layout
 import org.apache.logging.log4j.core.LogEvent
 import org.apache.logging.log4j.core.config.Node
@@ -49,7 +50,7 @@ class SimpleLayout(private val mode: SimpleLayoutMode) : AbstractStringLayout(Ch
             "thread" to event.threadName,
             "level" to event.level,
             "class" to event.loggerName,
-            "message" to event.message.formattedMessage
+            "message" to event.message.formattedMessage.let { StringEscapeUtils.escapeJson(it) }
         )
 
         event.thrown?.let {
@@ -85,16 +86,14 @@ class SimpleLayout(private val mode: SimpleLayoutMode) : AbstractStringLayout(Ch
     }
 
     private fun createThrowableMap(throwable: Throwable) = mapOf(
-        "name" to throwable.javaClass.name,
-        "message" to throwable.message,
+        "className" to throwable.javaClass.name,
+        "message" to throwable.message.let { StringEscapeUtils.escapeJson(it) },
         "stackTrace" to throwable.stackTrace.map { createStackTraceElementMap(it) }
     )
 
     private fun createStackTraceElementMap(element: StackTraceElement) = mapOf(
-        "className" to element.className,
-        "methodName" to element.methodName,
-        "fileName" to element.fileName,
-        "lineNumber" to element.lineNumber
+        "class" to "${element.className}::${element.methodName}",
+        "file" to "${element.fileName}::${element.lineNumber}"
     )
 
     private fun convertInstantToLocalDateTime(instant: Log4jInstant) = LocalDateTime.ofInstant(

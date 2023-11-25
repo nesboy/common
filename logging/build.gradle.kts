@@ -15,5 +15,6 @@ dependencies {
     val log4jVersion: String by project
 
     compileOnly("dev.tcheng.conventions-kotlin:plugin:0.0.1")
+    implementation("org.apache.commons:commons-text:1.11.0")
     implementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
 }
