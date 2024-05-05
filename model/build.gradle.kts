@@ -12,5 +12,5 @@ repositories {
 }
 
 dependencies {
-    compileOnly("dev.tcheng.conventions-kotlin:plugin:0.0.1")
+    compileOnly(lib.conventions.kotlin)
 }

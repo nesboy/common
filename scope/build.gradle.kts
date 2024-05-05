@@ -12,42 +12,37 @@ repositories {
 }
 
 dependencies {
-    val easyRandomVersion: String by project
-    val jacksonVersion: String by project
-    val junitVersion: String by project
-    val log4jVersion: String by project
-    val log4jKotlinVersion: String by project
-    val mockkVersion: String by project
-    val uomVersion:String by project
-
-    compileOnly("dev.tcheng.conventions-kotlin:plugin:0.0.1")
+    compileOnly(lib.conventions.kotlin)
 
     implementation(project(":model"))
-//    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jacksonVersion")
-//    implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
-//    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
-    implementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
-    implementation("org.apache.logging.log4j:log4j-api-kotlin:$log4jKotlinVersion")
-    implementation("systems.uom:systems-quantity:$uomVersion")
-    implementation("systems.uom:systems-unicode:$uomVersion")
-//    implementation("tech.uom.lib:uom-lib-jackson:$uomVersion")
+    implementation(lib.log4j.api)
+    implementation(lib.log4j.api.kotlin)
+    implementation(lib.uom.quantity)
+    implementation(lib.uom.unicode)
 
     testImplementation(kotlin("test"))
     testImplementation(project(":easy-random"))
     testImplementation(project(":model"))
-    testImplementation("io.mockk:mockk:$mockkVersion")
-    testImplementation("org.jeasy:easy-random-core:$easyRandomVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
+    testImplementation(lib.mockk)
+    testImplementation(lib.easyrandom)
+    testImplementation(lib.junit)
 
     integTestCompileOnly(project(":logging"))
-    integTestCompileOnly("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
 
     integTestImplementation(kotlin("test"))
     integTestImplementation(project(":model"))
-    integTestImplementation("org.apache.logging.log4j:log4j-api:$log4jVersion")
-    integTestImplementation("org.apache.logging.log4j:log4j-api-kotlin:$log4jKotlinVersion")
-    integTestImplementation("org.apache.logging.log4j:log4j-core:$log4jVersion")
-    integTestImplementation("org.junit.jupiter:junit-jupiter:$junitVersion")
-    integTestImplementation("systems.uom:systems-quantity:$uomVersion")
-    integTestImplementation("systems.uom:systems-unicode:$uomVersion")
+    integTestImplementation(lib.log4j.api)
+    integTestImplementation(lib.log4j.api.kotlin)
+    integTestImplementation(lib.log4j.core)
+    integTestImplementation(lib.junit)
+    integTestImplementation(lib.uom.quantity)
+    integTestImplementation(lib.uom.unicode)
+}
+
+tasks.test {
+    // temporary hack to mock Instant
+    jvmArgs(
+        "--add-opens", "java.base/java.time=ALL-UNNAMED",
+        "--add-opens", "java.base/java.lang.reflect=ALL-UNNAMED"
+    )
 }

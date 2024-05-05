@@ -12,8 +12,6 @@ repositories {
 }
 
 dependencies {
-    val easyRandomVersion: String by project
-
-    compileOnly("dev.tcheng.conventions-kotlin:plugin:0.0.1")
-    implementation("org.jeasy:easy-random-core:$easyRandomVersion")
+    compileOnly(lib.conventions.kotlin)
+    implementation(lib.easyrandom)
 }
