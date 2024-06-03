@@ -135,31 +135,26 @@ class MetadataManagerTest {
         @Test
         fun `WHEN metadata is new THEN add to scope and logger metadata`() {
             // prepare
-            val key1 = random.nextString()
-            val value1 = random.nextString()
+            val entries = mapOf(
+                random.nextString() to random.nextString(),
+                random.nextString() to random.nextString()
+            )
 
-            val key2 = random.nextString()
-            val value2 = random.nextString()
+            mockkObject(MetadataManager)
 
-            val entries = mapOf(key1 to value1, key2 to value2)
-
-            val underTest = mockk<MetadataManager>()
-
-            every { underTest.addAllMetadata(entries) } answers { callOriginal() }
+            every { MetadataManager.addAllMetadata(entries) } answers { callOriginal() }
 
             justRun {
-                underTest.addMetadata(key1, value1)
-                underTest.addMetadata(key2, value2)
+                entries.forEach { (key, value) -> MetadataManager.addMetadata(key, value) }
             }
 
             // execute
-            underTest.addAllMetadata(entries)
+            MetadataManager.addAllMetadata(entries)
 
             // verify
             verifyAll {
-                underTest.addAllMetadata(entries)
-                underTest.addMetadata(key1, value1)
-                underTest.addMetadata(key2, value2)
+                MetadataManager.addAllMetadata(entries)
+                entries.forEach { (key, value) -> MetadataManager.addMetadata(key, value) }
             }
         }
     }
